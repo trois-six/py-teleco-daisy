@@ -1,0 +1,32 @@
+class Constants:
+    BASE_URL = "https://tmate.telecoautomation.com"
+
+    USERNAME = "teleco"
+    PASSWORD = "tmate20"
+
+    BIOSSUN_ID_APP = "biossun"
+    BRUSTOR_ID_APP = "brustor"
+    DAISYSTAGE_ID_APP = "daisystage"
+    DAISY_ID_APP = "daisy"
+    DURMI_ID_APP = "durmi"
+    GIBUS_ID_APP = "gibus"
+    HARDTOP_ID_APP = "hardtop"
+    ID_APP_FLAVOR = "daisy"
+    KETTAL_ID_APP = "kettal"
+    PRATIC_ID_APP = "pratic"
+    WIFIPRODUCTS_ID_APP = "wifiproducts"
+    WISEDIRECT_ID_APP = "wisedirect"
+    WISE_ID_APP = "wise"
+
+    ENDPOINT_USER_LOGIN = "/teleco/services/account-login"
+    ENDPOINT_USER_LOGOUT = "/teleco/services/account-logout"
+    ENDPOINT_USER_REGISTRATION = "/teleco/services/account-registration"
+    ENDPOINT_USER_CHANGE_PASSWORD = "/teleco/services/change-password"
+    ENDPOINT_USER_RESET_PASSWORD = "/teleco/services/reset-password"
+    ENDPOINT_ACCOUNT_INSTALLATION_LIST = "/teleco/services/account-installation-list"
+    ENDPOINT_ACCOUNT_INSTALLATION_PAIR = "/teleco/services/account-installation-pair"
+    ENDPOINT_ACCOUNT_INSTALLATION_UNPAIR = "/teleco/services/account-installation-unpair"
+    ENDPOINT_TIMER_DEVICE_LIST = "/teleco/services/timer-device-list"
+    ENDPOINT_TIMER_DEVICE_SETUP = "/teleco/services/timer-device-setup"
+    ENDPOINT_COMMAND_DEVICE_LIST = "/teleco/services/command-device-list"
+   

@@ -5,7 +5,61 @@ from typing import Literal
 
 import requests
 
-base_url = "https://tmate.telecoautomation.com/"
+BASE_URL = "https://tmate.telecoautomation.com"
+BASE_URL_STAGE = "https://stage.tmate.telecoautomation.com"
+PASSWORD = "tmate20"
+USERNAME = "teleco"
+
+@dataclass
+class DaisyCloudResponseValue:
+    codEsito: str
+    msgEsito: str
+
+
+
+@dataclass
+class DaisyCloudUser:
+   BIOSSUN_ID_APP: str = "biossun"
+   BRUSTOR_ID_APP: str = "brustor"
+   DAISYSTAGE_ID_APP: str = "daisystage"
+   DAISY_ID_APP: str = "daisy"
+   DURMI_ID_APP: str = "durmi"
+   GIBUS_ID_APP: str = "gibus"
+   HARDTOP_ID_APP: str = "hardtop"
+
+
+
+
+
+
+@dataclass
+class UserLoginResponse:
+    idAccount: int
+    idSession: str
+
+@dataclass
+class DaisyCloudUserLoginResponse(DaisyCloudResponseValue):
+    valRisultato: UserLoginResponse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @dataclass
@@ -291,6 +345,37 @@ class TelecoDaisy:
         req_json = req.json()
         return req_json["nodeActive"]
 
+    def get_room_configuration_list(self, installation: DaisyInstallation) -> list[DaisyRoom]:
+        req = self.s.post(
+            base_url + "teleco/services/room-configuration-list",
+            json={
+                "idSession": self.idSession,
+                "idAccount": self.idAccount,
+                "idInstallation": installation.idInstallation,
+            },
+        )
+        req_json = req.json()
+        if req_json["codEsito"] != "S":
+            raise Exception(req_json)
+
+        rooms = []
+        for room in req_json["valRisultato"]["roomList"]:
+            devices = []
+            for device in room.pop("deviceList"):
+
+                # 21 White LED light
+                # 23 RGB LED light
+                if device["idDevicetype"] in (21,23):
+                    devices += [
+                        DaisyLight(**device, client=self, installation=installation)
+                    ]
+                elif device["idDevicetype"] in (22, 24):
+                    devices += [
+                        DaisyCover(**device, client=self, installation=installation)
+                    ]
+            rooms += [DaisyRoom(**room, deviceList=devices)]
+        return rooms
+    
     def get_room_list(self, installation: DaisyInstallation) -> list[DaisyRoom]:
         req = self.s.post(
             base_url + "teleco/services/room-list",
